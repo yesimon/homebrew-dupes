@@ -24,6 +24,16 @@ class Lapack < Formula
     system "cmake", ".", "-DBUILD_SHARED_LIBS:BOOL=ON", "-DLAPACKE:BOOL=ON", *std_cmake_args
     system "make", "install"
     man.install resource("manpages")
+
+    # Move lib64/* to lib/ on Linuxbrew
+    if OS.linux?
+      lib64 = Pathname.new "#{lib}64"
+      if lib64.directory?
+        cp_r "#{lib64}/.", "#{lib}"
+        rmdir lib64
+      end
+    end
+
   end
 
   test do
