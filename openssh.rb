@@ -20,6 +20,7 @@ class Openssh < Formula
   depends_on "libressl" => :optional
   depends_on "ldns" => :optional
   depends_on "pkg-config" => :build if build.with? "ldns"
+  depends_on "libedit" => :build if OS.linux?
 
   if OS.mac?
     patch do
